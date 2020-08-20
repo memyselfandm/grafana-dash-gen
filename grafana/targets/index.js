@@ -1,4 +1,4 @@
-// Copyright (c) 2015 Uber Technologies, Inc.
+// Copyright (c) Mike Gresham
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,29 +19,10 @@
 // THE SOFTWARE.
 
 'use strict';
-
-var Dashboard = require('./grafana/dashboard');
-var Row = require('./grafana/row');
-var Targets = require('./grafana/targets');
-var Panels = require('./grafana/panels');
-var Alert = require('./grafana/alert/alert');
-var Condition = require('./grafana/alert/condition');
-var Templates = require('./grafana/templates');
-var publish = require('./grafana/publish');
-var generateGraphId = require('./grafana/id');
-var config = require('./grafana/config');
-var Annotations = require('./grafana/annotations');
+var Graphite = require('./graphite');
+var Influx = require('./influx');
 
 module.exports = {
-    Dashboard: Dashboard,
-    Row: Row,
-    Panels: Panels,
-    Templates: Templates,
-    Alert,
-    Condition,
-    Annotations: Annotations,
-    Targets: Targets,
-    publish: publish,
-    generateGraphId: generateGraphId,
-    configure: config.configure
+	Graphite: Graphite,
+	Influx: Influx
 };

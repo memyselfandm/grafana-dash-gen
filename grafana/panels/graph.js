@@ -112,6 +112,9 @@ Graph.prototype.addAlert = function addAlert(alert) {
 };
 
 Graph.prototype.addTarget = function addTarget(target) {
+  if(this.state.datasource == "InfluxDB"){
+    this.state.targets.push(target.toJSON());
+  } else {
     const refs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const builtTarget = target.toString();
 
@@ -124,6 +127,7 @@ Graph.prototype.addTarget = function addTarget(target) {
     const targetFull = handleRefTargets(builtTarget, this.state.targets);
     const targetToAdd = Object.assign({}, targetWithRefs, targetFull);
     this.state.targets.push(targetToAdd);
+  }
 };
 
 function getRefsFromTarget(target) {

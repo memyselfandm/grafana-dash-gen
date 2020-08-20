@@ -26,6 +26,6 @@ require('./dashboard');
 require('./panels');
 require('./publish');
 require('./row');
-require('./target');
+require('./targets');
 require('./templates');
 require('./alert');

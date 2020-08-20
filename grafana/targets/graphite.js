@@ -23,9 +23,9 @@
 var _ = require('underscore');
 var util = require('util');
 
-function Target() {
+function Graphite() {
     if (arguments.length === 0) {
-        throw new Error('Incorrect invocation of Target. ' +
+        throw new Error('Incorrect invocation of Graphite. ' +
                         'Must provide at least one argument');
     }
     if (typeof arguments[0] === 'string') {
@@ -38,7 +38,7 @@ function Target() {
     }
 }
 
-Target.prototype.toString = function toString() {
+Graphite.prototype.toString = function toString() {
     if (this.func) {
         var args = _.reduce(this.func.slice(1), function reduce(memo, arg) {
             if (typeof arg === 'string') {
@@ -56,7 +56,7 @@ Target.prototype.toString = function toString() {
 
 // Primitive methods
 // Method Name: arity ignoring first target input
-Target.PRIMITIVES = {
+Graphite.PRIMITIVES = {
     absolute: 0,
     aggregateLine: 0,
     alias: 1,
@@ -150,20 +150,20 @@ Target.PRIMITIVES = {
     weightedAverage: 2
 };
 
-_.each(Target.PRIMITIVES, function each(n, method) {
-    Target.prototype[method] = function t() {
+_.each(Graphite.PRIMITIVES, function each(n, method) {
+    Graphite.prototype[method] = function t() {
         if (arguments.length < n) {
             /*eslint-disable*/
             console.warn("Incorrect number of arguments passed to %s", method);
             console.trace();
             /*eslint-enable*/
         }
-        return new Target(this,
+        return new Graphite(this,
             [method].concat(Array.prototype.slice.call(arguments, 0)));
     };
 });
 
-Target.COLORS = [
+Graphite.COLORS = [
     'orange',
     'blue',
     'green',
@@ -176,37 +176,37 @@ Target.COLORS = [
     'aqua'
 ];
 
-_.each(Target.COLORS, function each(color) {
-    Target.prototype[color] = function t() {
+_.each(Graphite.COLORS, function each(color) {
+    Graphite.prototype[color] = function t() {
         return this.color(color);
     };
 });
 
-// Target Helpers
+// Graphite Helpers
 
-Target.prototype.cpu = function cpu() {
+Graphite.prototype.cpu = function cpu() {
     return this.derivative().scale(0.016666666667).removeBelowValue(0);
 };
 
-Target.prototype.reallyFaded = function reallyFaded() {
+Graphite.prototype.reallyFaded = function reallyFaded() {
     return this.lineWidth(5).alpha(0.5);
 };
 
-Target.prototype.faded = function faded() {
+Graphite.prototype.faded = function faded() {
     return this.alpha(0.5).lineWidth(5);
 };
 
-Target.prototype.lastWeek = function lastWeek() {
+Graphite.prototype.lastWeek = function lastWeek() {
     return this.timeShift('7d');
 };
 
-Target.prototype.summarize15min = function summarize15min() {
+Graphite.prototype.summarize15min = function summarize15min() {
     return this.summarize('15min');
 };
 
-Target.prototype.hide = function hide() {
+Graphite.prototype.hide = function hide() {
     this.hide = true;
     return this;
 };
 
-module.exports = Target;
+module.exports = Graphite;
