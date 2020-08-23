@@ -113,7 +113,7 @@ Graph.prototype.addAlert = function addAlert(alert) {
 
 Graph.prototype.addTarget = function addTarget(target) {
   if(this.state.datasource == "InfluxDB"){
-    this.state.targets.push(target.toJSON());
+    this.state.targets.push(target.generate());
   } else {
     const refs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const builtTarget = target.toString();

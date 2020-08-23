@@ -98,9 +98,7 @@ SingleStat.prototype.setTitle = function setTitle(title) {
 };
 
 SingleStat.prototype.addTarget = function addTarget(target) {
-    this.state.targets.push({
-        target: target.toString()
-    });
+    this.state.targets.push(target.generate());
 };
 
 module.exports = SingleStat;

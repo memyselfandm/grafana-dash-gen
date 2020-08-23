@@ -54,6 +54,12 @@ Graphite.prototype.toString = function toString() {
     }
 };
 
+//TODO shimming this in for now. targets should use a generate function to output their final representation
+// so toString should come into this function + whatever stuff might be brought over from the graph panel
+Graphite.prototype.generate = function generate() {
+  return this.toString();
+}
+
 // Primitive methods
 // Method Name: arity ignoring first target input
 Graphite.PRIMITIVES = {

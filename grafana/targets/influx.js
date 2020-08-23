@@ -166,7 +166,7 @@ _.each(Influx.GROUPBYFUNCTIONS, function each(n, method) {
     };
 });
 
-Influx.prototype.toJSON = function(){
+Influx.prototype.generate = function(){
   return this.props;
 }
 

@@ -4,7 +4,7 @@ var grafana = require('./index');
 var Row = grafana.Row;
 var Dashboard = grafana.Dashboard;
 var Panels = grafana.Panels;
-var Target = grafana.Target;
+var Targets = grafana.Targets;
 var Alert = grafana.Alert;
 var Condition = grafana.Condition;
 
@@ -40,7 +40,7 @@ var ANNOTATIONS = [{
 }];
 var REFRESH = '1m';
 
-// Target prefixes
+// Target.Graphite prefixes
 var SERVER_PREFIX = 'servers.app*-$dc.myapp.';
 var COUNT_PREFIX = 'stats.$dc.counts.myapp.';
 
@@ -58,7 +58,7 @@ function generateDashboard() {
         title: 'req/sec',
         span: 8,
         targets: [
-            new Target(COUNT_PREFIX + 'statusCode.*').
+            new Target.Graphite(COUNT_PREFIX + 'statusCode.*').
                         transformNull(0).
                         sum().
                         hitcount('1seconds').
@@ -83,7 +83,7 @@ function generateDashboard() {
         postfix: 'req/sec',
         span: 4,
         targets: [
-            new Target(COUNT_PREFIX + 'statusCode.*').
+            new Target.Graphite(COUNT_PREFIX + 'statusCode.*').
                     sum().
                     scale(0.1)
         ]
@@ -101,13 +101,13 @@ function generateDashboard() {
         title: 'CPU',
         span: 4,
         targets: [
-            new Target(SERVER_PREFIX + 'cpu.user').
+            new Target.Graphite(SERVER_PREFIX + 'cpu.user').
                 nonNegativeDerivative().
                 scale(1 / 60).
                 scale(100).
                 averageSeries().
                 alias('avg'),
-            new Target(SERVER_PREFIX + 'cpu.user').
+            new Target.Graphite(SERVER_PREFIX + 'cpu.user').
                 nonNegativeDerivative().
                 scale(1 / 60).
                 scale(100).
@@ -119,7 +119,7 @@ function generateDashboard() {
         title: 'Memory',
         span: 4,
         targets: [
-            new Target(SERVER_PREFIX + 'memory.rss').
+            new Target.Graphite(SERVER_PREFIX + 'memory.rss').
                 averageSeries().
                 alias('rss')
         ]
@@ -128,7 +128,7 @@ function generateDashboard() {
         title: 'FDs',
         span: 4,
         targets: [
-            new Target(SERVER_PREFIX + 'fds').
+            new Target.Graphite(SERVER_PREFIX + 'fds').
                 averageSeries().
                 movingAverage('10min').
                 alias('moving avg')
